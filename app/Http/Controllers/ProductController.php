@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
@@ -75,7 +76,7 @@ class ProductController extends Controller
     //danh mục sản phẩm
     public function categoryProduct($id)
     {
-        $data = Product::query()->where('category_id', '=', $id)->with('category')->get();
+        $data = Product::query()->where('category_id', '=', $id)->with('category')->with('size')->with('color')->get();
         // dd($data);
         return view('user.category', compact('data'));
     }
@@ -83,7 +84,10 @@ class ProductController extends Controller
     // chi tiết sản phẩm
     public function detailProduct($id)
     {
-        $data = Product::query()->where('id', '=', $id)->first();
+        $data = Product::query()->where('id', '=', $id)->with('category')->first();
+        // $integrityProducts = Product::query()->where('id', '!=', $id)->get();
+        // dd($data);
+        // dd($integrityProducts);
         return view('user.detail', compact('data'));
     }
 }
