@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cart;
-use App\Http\Requests\StoreCartRequest;
-use App\Http\Requests\UpdateCartRequest;
+use App\Models\Product;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
@@ -13,7 +13,9 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+        $cart = Session::get('cart', []);
+        // dd($cart);
+        return view('user.cart', compact('cart'));
     }
 
     /**
@@ -27,7 +29,7 @@ class CartController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCartRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -35,7 +37,7 @@ class CartController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Cart $cart)
+    public function show(string $id)
     {
         //
     }
@@ -43,7 +45,7 @@ class CartController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Cart $cart)
+    public function edit(string $id)
     {
         //
     }
@@ -51,16 +53,60 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCartRequest $request, Cart $cart)
+    public function update(Request $request, string $id)
     {
-        //
+        $cart = Session::get('cart', []);
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity'] = $request->quantity;
+            Session::put('cart', $cart);
+        }
+        return redirect()->route('user.cart')->with('success', 'Giỏ hàng đã đc cập nhập');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Cart $cart)
+    public function destroy(string $id)
     {
         //
+    }
+
+    public function addToCart(Request $request)
+    {
+        $cart = Session::get('cart', []);
+
+        $id = $request->id;
+        $product_name = $request->product_name;
+        $price = $request->price;
+        $quantity = $request->quantity;
+        $image = $request->image;
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity'] += $quantity;
+        } else {
+            $cart[$id] = [
+                'id' => $id,
+                'product_name' => $product_name,
+                'price' => $price,
+                'quantity' => $quantity,
+                'image' => $image,
+            ];
+        }
+        Session::put('cart', $cart);
+        return redirect()->route('user.cart')->with('success', 'Sản phẩm được thêm thành công');
+    }
+
+    // xóa phần tử trong giỏ hàng
+    public function deleteCart()
+    {
+        Session::forget('cart');
+        return redirect()->route('user.home')->with('success', 'Giỏ hàng đã được xóa sạch');
+    }
+    public function removeOne($id)
+    {
+        $cart = Session::get('cart', []);
+
+        unset($cart[$id]);
+        Session::put('cart', $cart);
+        return redirect()->route('user.cart')->with('success', 'Sản phẩm đã được xóa khỏi giỏ hàng');
     }
 }

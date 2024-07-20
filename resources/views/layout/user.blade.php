@@ -9,7 +9,15 @@
 @php
     use App\Models\Category;
     $data = Category::query()->get();
+    $totalQuantity = 0;
 @endphp
+@if (session('cart'))
+    @foreach (session('cart') as $item)
+        @php
+            $totalQuantity += $item['quantity'];
+        @endphp
+    @endforeach
+@endif
 <!doctype html>
 <html lang="en">
 
@@ -26,7 +34,7 @@
     <link href="{{ asset('user/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('user/css/tiny-slider.css') }}" rel="stylesheet">
     <link href="{{ asset('user/css/style.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('user/scss/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('user/scss/style.scss') }}">
     <title>BonneyShop</title>
 </head>
 
@@ -68,8 +76,11 @@
                 </ul>
 
                 <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-                    <li><a class="nav-link" href="#"><img src="{{ asset('user/images/user.svg') }}"></a></li>
-                    <li><a class="nav-link" href=""><img src="{{ asset('user/images/cart.svg') }}"></a></li>
+                    <li><a class="nav-link" href=""><img src="{{ asset('user/images/user.svg') }}"></a></li>
+                    <li>
+                        <a class="nav-link" href="{{ route('user.cart') }}"><img
+                                src="{{ asset('user/images/cart.svg') }}"></i></a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -114,6 +125,7 @@
     <script src="{{ asset('user/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('user/js/tiny-slider.js') }}"></script>
     <script src="{{ asset('user/js/custom.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </body>
 
 </html>

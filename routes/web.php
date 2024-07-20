@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -24,3 +25,8 @@ Route::get('forgotPassword', function () {
 })->name('forgotPassword');
 Route::get('/user/category/{id}', [ProductController::class, 'categoryProduct'])->name('user.category');
 Route::get('/user/product/{id}', [ProductController::class, 'detailProduct'])->name('user.detail');
+Route::get('/cart', [CartController::class, 'index'])->name('user.cart');
+Route::post('/addToCart/{id}', [CartController::class, 'addToCart'])->name('user.addToCart');
+Route::delete('/deleteCart', [CartController::class, 'deleteCart'])->name('user.deleteCart');
+Route::delete('/updateCart/{id}', [CartController::class, 'update'])->name('user.updateCart');
+Route::delete('/deleteCart/{id}', [CartController::class, 'removeOne'])->name('user.removeOne');

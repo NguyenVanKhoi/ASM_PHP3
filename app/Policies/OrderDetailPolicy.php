@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Cart;
+use App\Models\OrderDetail;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class CartPolicy
+class OrderDetailPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +19,7 @@ class CartPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Cart $cart): bool
+    public function view(User $user, OrderDetail $orderDetail): bool
     {
         //
     }
@@ -35,7 +35,7 @@ class CartPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Cart $cart): bool
+    public function update(User $user, OrderDetail $orderDetail): bool
     {
         //
     }
@@ -43,7 +43,7 @@ class CartPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Cart $cart): bool
+    public function delete(User $user, OrderDetail $orderDetail): bool
     {
         //
     }
@@ -51,7 +51,7 @@ class CartPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Cart $cart): bool
+    public function restore(User $user, OrderDetail $orderDetail): bool
     {
         //
     }
@@ -59,7 +59,7 @@ class CartPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Cart $cart): bool
+    public function forceDelete(User $user, OrderDetail $orderDetail): bool
     {
         //
     }
