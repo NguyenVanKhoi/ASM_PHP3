@@ -76,7 +76,7 @@ class ProductController extends Controller
     //danh mục sản phẩm
     public function categoryProduct($id)
     {
-        $data = Product::query()->where('category_id', '=', $id)->with('category')->with('size')->with('color')->get();
+        $data = Product::query()->where('category_id', '=', $id)->with('category')->get();
         // dd($data);
         return view('user.category', compact('data'));
     }

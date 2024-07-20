@@ -92,7 +92,7 @@ class CartController extends Controller
             ];
         }
         Session::put('cart', $cart);
-        return redirect()->route('user.cart')->with('success', 'Sản phẩm được thêm thành công');
+        return redirect()->route('user.home')->with('success', 'Sản phẩm được thêm thành công');
     }
 
     // xóa phần tử trong giỏ hàng
@@ -104,7 +104,6 @@ class CartController extends Controller
     public function removeOne($id)
     {
         $cart = Session::get('cart', []);
-
         unset($cart[$id]);
         Session::put('cart', $cart);
         return redirect()->route('user.cart')->with('success', 'Sản phẩm đã được xóa khỏi giỏ hàng');

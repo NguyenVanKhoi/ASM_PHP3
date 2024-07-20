@@ -54,31 +54,23 @@
                                         </td>
                                         <td>{{ number_format($item['price'], 0, ',', '.') }}VND</td>
                                         <td>
-                                            <div class="input-group mb-3 d-flex align-items-center quantity-container"
-                                                style="max-width: 120px;">
-                                                <div class="input-group-prepend">
-                                                    <button class="btn btn-outline-black decrease"
-                                                        type="button">&minus;</button>
-                                                </div>
-                                                <input type="text" class="form-control text-center quantity-amount"
-                                                    value="{{ $item['quantity'] }}" name="quantity" placeholder=""
-                                                    aria-label="Example text with button addon"
-                                                    aria-describedby="button-addon1">
-                                                <div class="input-group-append">
-                                                    <button class="btn btn-outline-black increase"
-                                                        type="button">&plus;</button>
-                                                </div>
-                                            </div>
+                                            <form action="{{ route('user.updateCart', $item['id']) }}" method="post">
+                                                @csrf
+                                                @method('PUT')
+                                                {{-- <input type="hidden" name="cart_item_id" value="{{ $item['id'] }}"> --}}
+                                                <input type="number" name="quantity"
+                                                    class="form-control text-center quantity-amount"
+                                                    value="{{ $item['quantity'] }}" min="1">
+                                                <button type="submit" class="form-control">Cập nhập</button>
+                                            </form>
                                         </td>
                                         <td>{{ number_format($total, 0, ',', '.') }}VND</td>
                                         <td>
-                                            <form action="{{ route('user.removeOne', $item['id']) }}" method="post">
+                                            <form action="{{ route('user.removeOne', $item['id']) }}" method="get">
                                                 @csrf
-                                                @method('delete')
                                                 <button class="btn btn-black btn-sm">X</button>
                                             </form>
                                         </td>
-
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -95,11 +87,6 @@
                                 <a href="{{ route('user.home') }}" class="btn btn-outline-black btn-sm btn-block">Continue
                                     Shopping</a>
                             </div>
-                            {{-- <div class="col-md-6 mb-3 mb-md-0">
-                                <a href="{{ route('user.updateCart', $cart->id) }}"
-                                    class="btn btn-black btn-sm btn-block">Update
-                                    Cart</a>
-                            </div> --}}
                             <form action="{{ route('user.deleteCart') }}" method="post">
                                 @csrf
                                 @method('delete')
@@ -134,7 +121,7 @@
                                     <span class="text-black">Total</span>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    <strong class="text-black">{{ $totalPrice }}</strong>
+                                    <strong class="text-black">{{ number_format($totalPrice, 0, ',', '.') }}VND</strong>
                                 </div>
                             </div>
 

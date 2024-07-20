@@ -19,7 +19,7 @@
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 @foreach ($data as $item)
-                    <form action="#" method="GET" class="col mb-5">
+                    <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Sale badge-->
                             <a href="{{ route('user.detail', $item->id) }}" class="text-decoration-none">
@@ -30,8 +30,7 @@
                                     </div>
                                 @endif
                                 <!-- Product image-->
-                                <img class="card-img-top"
-                                    src="{{ asset('user/images/air-force-1-07-lv8-shoes-g2c8Rd.png') }}" alt="..." />
+                                <img class="card-img-top " src="{{ Storage::url($item->image) }}" alt="..." />
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
@@ -40,11 +39,11 @@
                             </a>
                             <!-- Product price-->
                             @if ($item->sale == 1)
-                                <span class="text-muted text-decoration-line-through">{{ $item->price }}đ</span>
-                                {{ $item->price - $item->price * (10 / 100) }}đ
+                                <span class="text-muted text-decoration-line-through ">{{ $item->price }}đ</span>
+                                {{ number_format($item->price - $item->price * (10 / 100), 0, ',', '.') }}VND
                             @else
                                 <span class="text-muted ">
-                                    {{ $item->price }}đ
+                                    {{ number_format($item->price, 0, ',', '.') }}VND
                                 </span>
                             @endif
                             <!-- Product reviews-->
@@ -52,15 +51,23 @@
                                 <div class="bi-star-fill">{{ $item->description }}</div>
                             </div>
                         </div>
-            </div>
-            <!-- Product actions-->
-            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center"><button type="submit" class="btn btn-outline-dark mt-auto">Add
-                        to cart</button>
-                </div>
+                    </div>
+                    <!-- Product actions-->
+                    <form action="{{ route('user.addToCart', $item->id) }}" method="post">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $item->id }}">
+                        <input type="hidden" name="product_name" value="{{ $item->product_name }}">
+                        <input type="hidden" name="price" value="{{ $item->price }}">
+                        <input type="hidden" name="image" value="{{ $item->image }}">
+                        <input type="hidden" name="quantity" value="1">
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><button type="submit" class="btn btn-outline-dark mt-auto">Add
+                                    to cart</button>
+                            </div>
+                        </div>
+                    </form>
             </div>
         </div>
-        </form>
         @endforeach
         {{-- <div class="col mb-5">
                     <div class="card h-100">

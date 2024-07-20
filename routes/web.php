@@ -28,5 +28,5 @@ Route::get('/user/product/{id}', [ProductController::class, 'detailProduct'])->n
 Route::get('/cart', [CartController::class, 'index'])->name('user.cart');
 Route::post('/addToCart/{id}', [CartController::class, 'addToCart'])->name('user.addToCart');
 Route::delete('/deleteCart', [CartController::class, 'deleteCart'])->name('user.deleteCart');
-Route::delete('/updateCart/{id}', [CartController::class, 'update'])->name('user.updateCart');
-Route::delete('/deleteCart/{id}', [CartController::class, 'removeOne'])->name('user.removeOne');
+Route::put('/updateCart/{id}', [CartController::class, 'update'])->name('user.updateCart');
+Route::get('/deleteCart/{id}', [CartController::class, 'removeOne'])->name('user.removeOne');
