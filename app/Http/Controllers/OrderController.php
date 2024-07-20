@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
+use Illuminate\Support\Facades\Session;
 use App\Http\Requests\UpdateOrderRequest;
 
 class OrderController extends Controller
@@ -13,7 +14,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $cart = Session::get('cart', []);
+        return view('user.order', compact('cart'));
     }
 
     /**
@@ -62,5 +64,10 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+
+    public function order()
+    {
+        $order = new Order();
     }
 }

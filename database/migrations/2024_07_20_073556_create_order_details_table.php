@@ -17,7 +17,6 @@ return new class extends Migration
             $table->integer('product_id');
             $table->integer('quantity');
             $table->double('price', 10, 2);
-            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

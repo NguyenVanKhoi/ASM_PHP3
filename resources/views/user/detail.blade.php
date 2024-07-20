@@ -38,13 +38,27 @@
                             </div>
                             <p class="lead">{{ $data->description }}</p>
                             <p class="lead">{{ $data->category->category_name }}</p>
+
                             <div class="d-flex">
-                                <input class="form-control text-center me-3" id="inputQuantity" name="quantity"
-                                    type="number" value="1" min="1" style="max-width: 4rem" />
-                                <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                                <form action="{{ route('user.addToCart', $data->id) }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $data->id }}">
+                                    <input type="hidden" name="product_name" value="{{ $data->product_name }}">
+                                    <input type="hidden" name="price" value="{{ $data->price }}">
+                                    <input type="hidden" name="image" value="{{ $data->image }}">
+                                    <input class="form-control text-center me-3" id="inputQuantity" name="quantity"
+                                        type="number" value="1" min="1" style="max-width: 4rem" />
+                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                        <div class="text-center"><button type="submit"
+                                                class="btn btn-outline-dark flex-shrink-0">Add
+                                                to cart</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                {{-- <button class="btn btn-outline-dark flex-shrink-0" type="button">
                                     <i class="bi-cart-fill me-1"></i>
                                     Add to cart
-                                </button>
+                                </button> --}}
                             </div>
                         </div>
                     </div>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +31,4 @@ Route::post('/addToCart/{id}', [CartController::class, 'addToCart'])->name('user
 Route::delete('/deleteCart', [CartController::class, 'deleteCart'])->name('user.deleteCart');
 Route::put('/updateCart/{id}', [CartController::class, 'update'])->name('user.updateCart');
 Route::get('/deleteCart/{id}', [CartController::class, 'removeOne'])->name('user.removeOne');
+Route::get('/order', [OrderController::class, 'index'])->name('user.order');

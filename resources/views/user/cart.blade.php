@@ -127,8 +127,8 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button class="btn btn-black btn-lg py-3 btn-block"
-                                        onclick="window.location='checkout.html'">Order</button>
+                                    <a href="{{ route('user.order') }}"
+                                        class="btn btn-black btn-lg py-3 btn-block">Order</a>
                                 </div>
                             </div>
                         </div>
